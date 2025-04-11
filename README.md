@@ -10,5 +10,6 @@ The process begins by preprocessing the input image, including resizing and norm
 ![image](https://github.com/user-attachments/assets/39bb7102-4218-44a3-8a01-4cac3ac752be)
 
 During forward propagation, the model applies the ReLU activation function in the hidden layer and Softmax in the output layer. Using the learned weights and network structure, the model then predicts the most likely digit class with over 99% accuracy.
+
 ![image](https://github.com/user-attachments/assets/8e082818-b156-4ef9-8b46-e3e98840439f)
 
