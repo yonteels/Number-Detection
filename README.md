@@ -1,4 +1,4 @@
-
+# Overall
 This is a custom-built neural network that detects handwritten numbers from image inputs. It uses ReLU activation in the hidden layers and a softmax activation function in the output layer for classification. The model is trained using backpropagation with a loss function to minimize prediction errors, achieving over 99% accuracy when predicting digits.
 
 After training the model for 100 epochs, the custom neural network achieved a 93% classification accuracy, demonstrating strong generalization performance on the MNIST dataset.
