@@ -66,15 +66,21 @@ epochs = 100
 batch_size = 128
 decay_rate = 0.01
 
+loss_history = []
+
+
 for epoch in range(epochs):
     indices = np.random.permutation(X_train.shape[0])
     X_train_shuffled = X_train[indices]
     y_train_shuffled = y_train[indices]
-    
+
+    epoch_loss = 0
+    num_batches = X_train.shape[0] // batch_size
+
     for i in range(0, X_train.shape[0], batch_size):
         X_batch = X_train_shuffled[i:i+batch_size]
         y_batch = y_train_shuffled[i:i+batch_size]
-        
+
         z1, a1, z2, a2 = forward(X_batch)
         loss = compute_loss(y_batch, a2)
         dW1, db1, dW2, db2 = backward(X_batch, y_batch, z1, a1, z2, a2)
@@ -84,10 +90,15 @@ for epoch in range(epochs):
         W2 -= learning_rate * dW2
         b2 -= learning_rate * db2
 
+        epoch_loss += loss
+
+    epoch_loss /= num_batches
+    loss_history.append(epoch_loss)
+
     learning_rate *= (1. / (1. + decay_rate * epoch))
 
     if epoch % 10 == 0:
-        print(f"Epoch {epoch + 1}, Loss: {loss:.4f}")
+        print(f"Epoch {epoch + 1}, Loss: {epoch_loss:.4f}")
 
 # Evaluation
 _, _, _, y_pred = forward(X_test)
@@ -96,6 +107,14 @@ print(f"Test Accuracy: {accuracy * 100:.2f}%")
 
 # Save model weights
 np.savez("model_weights.npz", W1=W1, b1=b1, W2=W2, b2=b2)
+
+# Plot training loss
+plt.plot(range(1, epochs + 1), loss_history, marker='o')
+plt.title("Training Loss Over Epochs")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.grid(True)
+plt.show()
 
 # Save test images with predictions (for testing)
 # output_dir = "predicted_images"

@@ -13,8 +13,9 @@ W2 = weights['W2']
 b2 = weights['b2']
 
 # Activation functions
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
+def relu(x):
+    return np.maximum(0, x)
+
 
 def softmax(x):
     exp = np.exp(x - np.max(x, axis=1, keepdims=True))
@@ -23,7 +24,7 @@ def softmax(x):
 # Forward pass (weight adjustment, sigmoid, softmax, weight adjustment )
 def forward(X):
     z1 = np.dot(X, W1) + b1
-    a1 = sigmoid(z1)
+    a1 = relu(z1)
     z2 = np.dot(a1, W2) + b2
     a2 = softmax(z2)
     return a2
@@ -65,3 +66,9 @@ if __name__ == "__main__":
 
     predicted_digit = np.argmax(prediction)
     print(f"Predicted digit: {predicted_digit}")
+
+    bar_x = np.array([0,1,2,3,4,5,6,7,8,9])
+    bar_y = bar_y = prediction.flatten()
+
+    plt.bar(bar_x, bar_y)
+    plt.show()
